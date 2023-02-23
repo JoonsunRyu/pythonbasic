@@ -1,5 +1,8 @@
 desc mysql.user;
-describe mysql.user;
+describe mysql.user;  # describe = desc
+
+##### 사용자 테이블 데이터 조회
+select user, host from mysql.user;
 
 ##### 시스템 내 유저 조회
 show columns from mysql.user;
@@ -11,20 +14,21 @@ select Host, user from mysql.user;
 create user 'test'@'localhost' identified by '1234';
 # '아이디'@'접근 가능한 주소' identified by '비밀번호';
 
-##### 어디서든 접속 가능한 사용자 만들기
+## 어디서든 접속 가능한 사용자 만들기
 create user 'anywhere'@'%' identified by '1234';  # 어디에서나 접근 가능
 select user, Host from mysql.user;
+# %: 와일드카드. 어떤 값을 대체할 수 있음
 
-##### 특정 주소 내에서 접속 가능한 사용자 만들기
+## 특정 주소 내에서 접속 가능한 사용자 만들기
 create user 'test2'@'192.168.0.%' identified by '1234';  # 특정 대역에서는 접근 가능
 select user, Host from mysql.user;
 
-##### OR REPLACE - 이미 존재하는 사용자 이름으로 만들어도 에러 X
+## OR REPLACE - 이미 존재하는 사용자 이름으로 만들어도 에러 X
 # 기존 사용자를 삭제하고 다시 만듦
 create or replace user 'test'@'localhost' identified by '1234';  # 사용하는 pc에서만 접근 가능
 select user, host from mysql.user;
 
-##### 같은 이름의 사용자가 없을 때에만 사용자를 추가한다
+## 같은 이름의 사용자가 없을 때에만 사용자를 추가한다
 create user if not exists 'test'@'localhost' identified by '1234';
 # 이미 있는 사용자 이름이므로 생성되지 않음
 select user, host from mysql.user;
@@ -55,8 +59,8 @@ flush privileges;
 
 
 ##### 데이터베이스 권한 확인
-show grants for 'test'@'localhost'
-# 데이터에 대하여 취할 수 있는 것: CRUD, Create Read Update Delete
+show grants for 'test'@'localhost';
+ ## <참고> 데이터에 대하여 취할 수 있는 것: CRUD, Create, Read, Update, Delete
 
 
 ##### 데이터베이스 권한 삭제
@@ -68,7 +72,7 @@ show grants for 'test'@'localhost';
 ##### 데이터베이스 생성
 show databases;
 
-create database test;
+create database test;  # 'test'라는 데이터베이스 만들기
 create database if not exists test;  # 이미 존재한다면 생성하지 말 것
 
 create database `test.test`;
@@ -101,7 +105,7 @@ show tables;
 
 
 ##### 테이블 생성
-# 여러 개의 열 추가하기
+# 여러 개의 열 추가하기 - 콤마(,)로 구분
 create table test_table(
 	test_column1 int,
     test_column2 int,
